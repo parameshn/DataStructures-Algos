@@ -169,20 +169,18 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
         size++;
     }
 
-    public void addAt(T data, int index) throws Exception{
+    public void addAt(T data, int index) throws Exception {
         if (index < 0 || index > size) {
             throw new Exception("out of bounds");
         }
-        
 
-        
         if (index == 0) {
             addFirst(data);
             return;
         } else if (index == size) {
             addLast(data);
             return;
-        }else {
+        } else {
             Node<T> trav = head;
             int n = 0;
             while (n != index) {
@@ -195,7 +193,138 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
             size++;
         }
     }
-        
+    
+    public T peekFirst() {
+        if (size == 0) {
+            System.out.println("List is empty!");
+            return null;
+        }
+        return head.data;
+    }
+    
+    public T peekLast() {
+        if (size == 0) {
+            System.out.println("List is empty!");
+            return null;
+        }
+        return tail.data;
+    }
+
+    public T removeFirst() {
+        if (size == 0) {
+            System.out.println("List is empty!");
+            return null;
+        }
+
+        T data = head.data;
+        if (size == 1) {
+            head = null;
+            tail = null;
+        } else {
+            head = head.next;
+            head.prev = tail;
+            head.next = head;
+        }
+        size--;
+        return data;
+    }
+    
+    public T removeLast() {
+        if (isEmpty()) {
+            throw new RuntimeException("EmptyLsit");
+        }
+        T data = tail.data;
+        if (size == 1) {
+            removeFirst();
+        } else {
+            tail = tail.prev;
+            head.prev = tail;
+            tail.next = head;
+        }
+        size--;
+        return data;
+
+    }
+   /*Checked exceptions are better when:
+   The error is recoverable and the caller must handle it explicitly.
+   Example: A file not found error where the user can be prompted to provide a new file path.
+   Unchecked exceptions are better when:
+   The error is not recoverable, or it represents a programming mistake.
+   Example: Passing a null value to a method that does not allow it. */
+
+   public T remove(Node<T> node) {
+       if (head == null) {
+           throw new RuntimeException("List is empty");
+       }
+
+       if (node == head) {
+           return removeFirst();
+       }
+       if (node == tail) {
+           return removeLast();
+       }
+       // Traverse to find the node
+       //  Node<T> temp = head;
+
+       //   while (temp != node && temp != head) {
+       //       temp = temp.next;
+       //   }
+       //   if (temp == head) {
+       //       throw new RuntimeException("Node does not exist");
+       //   }
+       //   T data = temp.data;
+       //   temp.next.prev = temp.prev;
+       //   temp.prev.next = temp.next;
+       //   //temp = null; unnessary cuz temp is local 
+       //   size--;
+       //   return data;
+
+       Node<T> trav = head;
+       while (trav != head) {
+           if (trav == node) {
+               T data = node.data;
+               trav.next.prev = trav.prev;
+               trav.prev.next = trav.next;
+               size--;
+               return data;
+           }
+           trav = trav.next;
+       }
+       throw new RuntimeException("Node does not exist!");
+
+   }
+
+   public boolean remove(Object obj) {
+       Node<T> trav = head;
+
+       if (obj == null) {
+        do{
+            if(trav.data == null){
+                remove(trav);
+                return true;
+            }
+            trav = trav.next;
+        } while (trav != head);
+    } else {
+        do {
+            if (trav.data.equals(obj)) {
+                remove(trav);
+                return true;
+            }
+            trav = trav.next;
+        } while (trav != head);
+    }
+    return false;
+   }
+
+   public T indexOf(Object obj) {
+    if(isEmpty())
+        throw new RuntimeException("Empty List!");
+
+    if (obj == null) {
+            
+        }
+   }
 
 }
 
