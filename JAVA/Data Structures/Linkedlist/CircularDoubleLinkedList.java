@@ -17,6 +17,10 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
             this.next = next;
             this.prev = prev;
         }
+        @Override
+        public String toString() {
+            return data.toString();
+        }
     }
     /*
      * The `Node` class in your `DoublyLinkedList` implementation **does not have to
@@ -294,13 +298,28 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
 
    }
 
+   public T remove2(Node<T> node) {
+       if (node == head) {
+           return removeFirst();
+       }
+       if (node == tail) {
+           return removeLast();
+       }
+
+       node.next.prev = node.prev;
+       node.prev.next = node.next;
+
+       size--;
+       return node.data;
+   }
+
    public boolean remove(Object obj) {
        Node<T> trav = head;
 
        if (obj == null) {
         do{
             if(trav.data == null){
-                remove(trav);
+                remove2(trav);
                 return true;
             }
             trav = trav.next;
@@ -308,7 +327,7 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
     } else {
         do {
             if (trav.data.equals(obj)) {
-                remove(trav);
+                remove2(trav);
                 return true;
             }
             trav = trav.next;
@@ -317,16 +336,102 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
     return false;
    }
 
-   public T indexOf(Object obj) {
-    if(isEmpty())
-        throw new RuntimeException("Empty List!");
+   public int indexOf(Object obj) {
+       if (isEmpty())
+           throw new RuntimeException("Empty List!");
 
-    if (obj == null) {
-            
-        }
+       int index = 0;
+       Node<T> trav = head;
+       if (obj == null) {
+           do {
+               if (trav.data == null) {
+                   return index;
+               }
+               index++;
+               trav = trav.next;
+           } while (trav != head);
+       } else {
+           do {
+               if (trav.data.equals(obj)) {
+                   return index;
+               }
+               trav = trav.next;
+           } while (trav != head);
+       }
+       //throw new RuntimeException("Doesn't exist");
+       return -1;
    }
 
+   public T removeAt(int index) {
+       if (isEmpty())
+           throw new RuntimeException("Empty List!");
+       if (index >= size || index < 0)
+           throw new RuntimeException("Index out bounds");
+       Node<T> trav;
+       if (index < size / 2) {
+            trav = head;
+           for (int i = 0; i != index; i++) {
+               trav = trav.next;
+           }
+       } else {
+           trav = tail;
+           for (int i = size - 1; i > index; i--) {
+               trav = trav.prev;
+           }
+       }
+   
+       return remove2(trav);
+
+   }
+    
+   public boolean contains(Object obj) {
+       if (isEmpty())
+           throw new RuntimeException("Empty List!");
+
+       Node<T> trav = head;
+       do {
+           if (obj == null) {
+               if (trav.data == null) {
+                   return true;
+               }
+           } else if (obj.equals(trav.data)) {
+               return true;
+           }
+           trav = trav.next;
+       } while (trav != head);
+       return false;
+   }
+    
+   // allows circular doubly linked list to be iterated over using a for-each loop or an
+   // explicit iterator
+   @Override
+   public java.util.Iterator<T> iterator() {
+       return new java.util.Iterator<T>() {
+           private Node<T> trav = head;
+           private boolean started = false;
+
+           @Override
+           public boolean hasNext() {
+               return trav != null && (!started || trav != head);
+           }
+
+           @Override
+           public T next() {
+               T data = trav.data;
+               trav = trav.next;
+               return data;
+           }
+
+           @Override
+           public void remove() {
+               throw new UnsupportedOperationException();
+           }
+       };
+   }
+   
+
 }
+
 
 
 
