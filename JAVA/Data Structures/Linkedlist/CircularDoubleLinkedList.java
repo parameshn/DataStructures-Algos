@@ -417,8 +417,14 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
 
            @Override
            public T next() {
+               if (!hasNext()) {
+                   throw new java.util.NoSuchElementException();
+               }
                T data = trav.data;
                trav = trav.next;
+               if (trav == head) {
+                   started = true;
+               }
                return data;
            }
 
@@ -428,7 +434,24 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
            }
        };
    }
-   
+
+   public String toString() {
+       if (isEmpty()) {
+           throw new RuntimeException("List Empty!");
+       }
+       StringBuilder sb = new StringBuilder();
+       sb.append("[");
+       Node<T> trav = head;
+       do {
+           sb.append(trav.data);
+           if (trav.next != head) {
+               sb.append(",");
+           }
+           trav = trav.next;
+       } while (trav != head);
+       sb.append("]");
+       return sb.toString();
+   }
 
 }
 
