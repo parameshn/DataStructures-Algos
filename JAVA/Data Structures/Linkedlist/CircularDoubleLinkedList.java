@@ -1,6 +1,5 @@
 package Linkedlist;
 
-import java.util.Iterator;
 
 public class CircularDoubleLinkedList<T> implements Iterable<T> {
     Node<T> head;
@@ -451,6 +450,24 @@ public class CircularDoubleLinkedList<T> implements Iterable<T> {
        } while (trav != head);
        sb.append("]");
        return sb.toString();
+   }
+
+   public void reverse() {
+    if(isEmpty())
+        throw new RuntimeException("List empty");
+
+    Node<T> cur = head;
+    Node<T> temp = null;
+
+    do{
+        temp = cur.prev;
+        cur.prev = cur.next;
+        cur.next = temp;
+        cur = cur.prev;
+    } while (cur != head);
+
+    head = temp.prev;
+    tail = temp;
    }
 
 }
