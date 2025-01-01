@@ -295,4 +295,27 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         sb.append("]");
         return sb.toString();
     }
+
+    public void reverse() {
+        if (isEmpty())
+            throw new RuntimeException("List empty");
+
+        Node<T> cur = head;
+        Node<T> temp = null;
+
+        while (cur != null)
+        {
+            temp = cur.prev;
+            cur.prev = cur.next;
+            cur.next = temp;
+            cur = cur.prev;
+        }
+
+        while (temp != null) {
+            head = temp.prev;
+            tail = temp;
+        }
+    }
+
+
 }
