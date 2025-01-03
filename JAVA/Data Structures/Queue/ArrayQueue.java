@@ -101,11 +101,11 @@ public class ArrayQueue<T> implements Queue<T> {
     public T poll() {
         if (isEmpty())
             return null;
-        front = adjustIndex(rear, front);
+        
         front = adjustIndex(front, data.length);
         return (T) data[front++];
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public T element() {
@@ -114,7 +114,7 @@ public class ArrayQueue<T> implements Queue<T> {
 
         return (T) data[front];
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public T peek() {
@@ -132,9 +132,9 @@ public class ArrayQueue<T> implements Queue<T> {
         rear = adjustIndex(rear, data.length);
         return true;
     }
-    
+
     @Override
-    public boolean addAll(Collection<? extends T> c){
+    public boolean addAll(Collection<? extends T> c) {
         for (T ele : c) {
             if (isFull())
                 throw new IllegalStateException("Queue is full!");
@@ -143,6 +143,85 @@ public class ArrayQueue<T> implements Queue<T> {
         }
         return true;
     }
+
+    public void clear() {
+        if (isEmpty())
+            // throw new RuntimeException("queue is empty!");
+            return;
+
+        for (int i = 0; i < data.length; i++) {
+            data[i] = null;
+        }
+
+        front = rear = 0;
+    }
+
+    public boolean contains(Object o) {
+        if (isEmpty())
+            // throw new RuntimeException("queue is empty!");
+            return false;
+
+        for (int i = front; i != rear; i = adjustIndex(+1, data.length)) {
+            if (data[i].equals(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // @SuppressWarnings("unchecked")
+    // public boolean containsAll(Collection<?> o) {
+    //     if(isEmpty())
+    //         return false;
+
+    //         int i = 0;
+    //         for(Object ele : o){
+    //             for(int j = 0;j < data.length;j++){
+    //                 if(ele.equals(data[j])){
+    //                     i++;
+    //                 }
+    //             }
+    //         }
+    //         if(i == o.size())
+    //         return true;
+
+    //         return false;
+    // }
+    public boolean containsAll(Collection<?> o) {
+        if (isEmpty()) {
+            return false;
+        }
+
+        for (Object ele : o) {
+            boolean found = false;
+            for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+                if (data[i].equals(o)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                return false;
+        }
+        return true;
+    }
+
+
+    // @Override
+    // @SuppressWarnings("unchecked")
+    // public java.util.Iterator<T> iterator() {
+    //     return new java.util.Iterator<T>(){
+    //         public boolean hasNext(){
+    //            return front !=  rear;
+    //         }
+    //         public T next(){
+    //             rear = adjustIndex(rear, data.length);
+    //             return (T) data[rear++];
+
+    //         }
+    //     };
+    // }
+
 
     public boolean isFull() {
         return (rear + 1) % data.length == front;
