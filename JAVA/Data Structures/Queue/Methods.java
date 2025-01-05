@@ -17,10 +17,29 @@ public class Methods {
       * E poll() // retrieve and remove the head element
       */
 
-     /*Implemented using
+     /*
+      * Implemented using
       * Array
-      singly linked list
-      doubly linked list
-
+      * singly linked list
+      * doubly linked list
+      * 
+      * Collection
+      * ├── List
+      * │ ├── ArrayList
+      * │ ├── LinkedList
+      * │ ├── Vector
+      * │ │ └── Stack
+      * ├── Set
+      * │ ├── HashSet
+      * │ ├── LinkedHashSet
+      * │ └── TreeSet
+      * ├── Queue
+      * │ ├── PriorityQueue
+      * │ └── LinkedList
+      * └── Deque
+      * ├── ArrayDeque
+      * └── LinkedList
+      * 
+      * 
       */
 }
