@@ -101,7 +101,7 @@ public class ArrayQueue<T> implements Queue<T> {
     public T poll() {
         if (isEmpty())
             return null;
-        
+
         front = adjustIndex(front, data.length);
         return (T) data[front++];
     }
@@ -206,6 +206,35 @@ public class ArrayQueue<T> implements Queue<T> {
         return true;
     }
 
+    // public boolean removeAll(Collection<?> c) {
+    //     if(isEmpty())
+    //         return false;
+
+    //     for (int i = 0; i != rear; i = adjustIndex(i + 1, data.length)) {
+    //         data[i] = null;
+    //     }
+    //     front = 0;
+    //     rear = -1;
+    //     return true;
+    // }
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        boolean modified = false;
+        for (int i = front; i != rear;) {
+            if (c.contains(data[i])) {
+                // Shift elements to the left to remove the current element
+                for (int j = i; j != rear; j = adjustIndex(j + 1, data.length)) {
+                    data[j] = data[adjustIndex(j + 1, data.length)];
+                }
+                rear = adjustIndex(rear - 1, data.length);
+                data[rear] = null; // Clear the last element
+                modified = true;
+            } else {
+                i = adjustIndex(i + 1, data.length);
+            }
+        }
+        return modified;
+    }
 
     // @Override
     // @SuppressWarnings("unchecked")
@@ -222,6 +251,120 @@ public class ArrayQueue<T> implements Queue<T> {
     //     };
     // }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public java.util.Iterator<T> iterator() {
+        return new java.util.Iterator<T>() {
+            private int current = front;
+
+            public boolean hasNext() {
+                return current == rear;
+            }
+
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                T element = (T) data[current];
+                current = adjustIndex(current + 1, data.length);
+                return element;
+            }
+        };
+    }
+
+    public Object[] toArray() {
+        Object[] result = new Object[size()];
+        int index = 0;
+        for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+            result[index++] = data[i];
+        }
+        return result;
+    }
+
+    // @Override
+    // @SuppressWarnings("unchecked")
+    // public <T> T[] toArray(T[] a) {
+    //     int size = size();
+    //     if (a.length < size) {
+    //         a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    //     }
+    //     int index = 0;
+    //     for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+    //         a[index++] = (T) data[i];
+    //     }
+    //     if (a.length > size) {
+    //         a[size] = null;
+    //     }
+    //     return a;
+    // }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <U> U[] toArray(U[] a) {
+        int size = size();
+        if (a.length < size) {
+            a = (U[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+        }
+        int index = 0;
+        for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+            a[index++] = (U) data[i];
+        }
+        if (a.length > size) {
+            a[size] = null;
+        }
+        return a;
+    }
+
+    // public boolean remove(Object o) {
+    //     if (isEmpty()) {
+    //         return false;
+    //     }
+
+    //     for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+    //         if (data[i].equals(o)) {
+    //             for (int j = i; j != rear; j = adjustIndex(j + 1, data.length)) {
+    //                 data[j] = data[adjustIndex(j + 1, data.length)];
+    //             }
+    //             rear = adjustIndex(rear - 1, data.length);
+    //             data[rear] = null;
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+    public boolean remove(Object o) {
+        if (isEmpty())
+            return false;
+
+        for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
+            if (data[i].equals(o)) {
+                for (int j = front; i != rear; j = adjustIndex(j + 1, data.length)) {
+                    data[j] = data[j + 1];
+                }
+                rear = adjustIndex(rear - 1, data.length);
+                data[rear] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        boolean modified = false;
+        for (int i = front; i != rear;) {
+            if (!c.contains(data[i])) {
+                for (int j = i; j != rear; j = adjustIndex(j + 1, data.length)) {
+                    data[j] = data[adjustIndex(j + 1, data.length)];
+                }
+                rear = adjustIndex(rear - 1, data.length);
+                data[rear] = null; // Clear the last element
+                modified = true;
+            } else {
+                i = adjustIndex(i + 1, data.length);
+            }
+        }
+        return modified;
+    }
 
     public boolean isFull() {
         return (rear + 1) % data.length == front;
