@@ -1,6 +1,6 @@
 package Queue;
 
-import java.io.EOFException;
+
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -17,65 +17,7 @@ public class ArrayQueue<T> implements Queue<T> {
         rear = front = 0;
     }
 
-    // @Override
-    // public boolean offer(T data) {
-    // if (isFull())
-    // return false;
-    // // throw new RuntimeException("Queue is full!");
 
-    // this.data[rear++] = data;
-    // rear = adjustIndex(rear, this.data.length);
-    // return true;
-    // }
-
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public T poll() {
-    // if (isFull())
-    // throw new RuntimeException();
-    // front = adjustIndex(front, data.length);
-    // return (T) data[front++];
-    // }
-
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public T peek() {
-    // if (isEmpty()) {
-    // throw new RuntimeException("Empty!");
-    // }
-    // return (T) data[front];
-    // }
-
-    // @Override
-    // public boolean add(T ele) {
-    // if (isEmpty())
-    // throw new IllegalStateException("Empty List!");
-
-    // data[rear++] = ele;
-    // rear = adjustIndex(rear, data.length);
-    // return true;
-    // }
-
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public T remove() {
-    // if (isEmpty())
-    // throw new IllegalStateException("Empty List!");
-
-    // T ele = (T) data[front++];
-    // front = adjustIndex(front, data.length);
-    // return ele;
-
-    // }
-
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public T element() {
-    // if (isEmpty()) {
-    // throw new RuntimeException("Empty!");
-    // }
-    // return (T) data[front];
-    // }
     @Override
     public boolean offer(T ele) {
         if (isFull())
@@ -169,24 +111,7 @@ public class ArrayQueue<T> implements Queue<T> {
         return false;
     }
 
-    // @SuppressWarnings("unchecked")
-    // public boolean containsAll(Collection<?> o) {
-    //     if(isEmpty())
-    //         return false;
-
-    //         int i = 0;
-    //         for(Object ele : o){
-    //             for(int j = 0;j < data.length;j++){
-    //                 if(ele.equals(data[j])){
-    //                     i++;
-    //                 }
-    //             }
-    //         }
-    //         if(i == o.size())
-    //         return true;
-
-    //         return false;
-    // }
+   
     public boolean containsAll(Collection<?> o) {
         if (isEmpty()) {
             return false;
@@ -195,7 +120,7 @@ public class ArrayQueue<T> implements Queue<T> {
         for (Object ele : o) {
             boolean found = false;
             for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
-                if (data[i].equals(o)) {
+                if (data[i].equals(ele)) {
                     found = true;
                     break;
                 }
@@ -206,17 +131,6 @@ public class ArrayQueue<T> implements Queue<T> {
         return true;
     }
 
-    // public boolean removeAll(Collection<?> c) {
-    //     if(isEmpty())
-    //         return false;
-
-    //     for (int i = 0; i != rear; i = adjustIndex(i + 1, data.length)) {
-    //         data[i] = null;
-    //     }
-    //     front = 0;
-    //     rear = -1;
-    //     return true;
-    // }
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean modified = false;
@@ -236,20 +150,6 @@ public class ArrayQueue<T> implements Queue<T> {
         return modified;
     }
 
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public java.util.Iterator<T> iterator() {
-    //     return new java.util.Iterator<T>(){
-    //         public boolean hasNext(){
-    //            return front !=  rear;
-    //         }
-    //         public T next(){
-    //             rear = adjustIndex(rear, data.length);
-    //             return (T) data[rear++];
-
-    //         }
-    //     };
-    // }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -281,22 +181,6 @@ public class ArrayQueue<T> implements Queue<T> {
         return result;
     }
 
-    // @Override
-    // @SuppressWarnings("unchecked")
-    // public <T> T[] toArray(T[] a) {
-    //     int size = size();
-    //     if (a.length < size) {
-    //         a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
-    //     }
-    //     int index = 0;
-    //     for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
-    //         a[index++] = (T) data[i];
-    //     }
-    //     if (a.length > size) {
-    //         a[size] = null;
-    //     }
-    //     return a;
-    // }
     @Override
     @SuppressWarnings("unchecked")
     public <U> U[] toArray(U[] a) {
@@ -314,23 +198,6 @@ public class ArrayQueue<T> implements Queue<T> {
         return a;
     }
 
-    // public boolean remove(Object o) {
-    //     if (isEmpty()) {
-    //         return false;
-    //     }
-
-    //     for (int i = front; i != rear; i = adjustIndex(i + 1, data.length)) {
-    //         if (data[i].equals(o)) {
-    //             for (int j = i; j != rear; j = adjustIndex(j + 1, data.length)) {
-    //                 data[j] = data[adjustIndex(j + 1, data.length)];
-    //             }
-    //             rear = adjustIndex(rear - 1, data.length);
-    //             data[rear] = null;
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
     public boolean remove(Object o) {
         if (isEmpty())
             return false;
