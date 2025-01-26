@@ -62,3 +62,4 @@ public class KMP {
         System.out.println(matches); // Output: [0, 3]
     }
 }
+// https://chat.deepseek.com/a/chat/s/26ce1066-e120-48d3-a243-68422825110e
