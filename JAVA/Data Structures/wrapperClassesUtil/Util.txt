@@ -1,0 +1,71 @@
+Java Wrapper Classes  
+├── Number-Based  
+│   ├── Integer (int)  
+│   │   ├── valueOf(int) → Converts `int` to `Integer`  
+│   │   ├── parseInt(String) → Converts `String` to `int`  
+│   │   ├── toString(int) → Converts `int` to `String`  
+│   │   ├── compare(int, int) → Compares two `int` values  
+│   │   ├── max(int, int) → Returns the larger of two `int` values  
+│   │   ├── min(int, int) → Returns the smaller of two `int` values  
+│   │   ├── bitCount(int) → Counts `1`s in binary representation  
+│   │   ├── toBinaryString(int) → Converts `int` to binary `String`  
+│   │   ├── toHexString(int) → Converts `int` to hex `String`  
+│   │  
+│   ├── Double (double)  
+│   │   ├── valueOf(double) → Converts `double` to `Double`  
+│   │   ├── parseDouble(String) → Converts `String` to `double`  
+│   │   ├── toString(double) → Converts `double` to `String`  
+│   │   ├── compare(double, double) → Compares two `double` values  
+│   │   ├── isNaN(double) → Checks if `double` is `NaN`  
+│   │   ├── isInfinite(double) → Checks if `double` is infinite  
+│   │  
+│   ├── Long (long)  
+│   │   ├── valueOf(long) → Converts `long` to `Long`  
+│   │   ├── parseLong(String) → Converts `String` to `long`  
+│   │   ├── toString(long) → Converts `long` to `String`  
+│   │  
+│   ├── Float (float)  
+│   │   ├── valueOf(float) → Converts `float` to `Float`  
+│   │   ├── parseFloat(String) → Converts `String` to `float`  
+│   │   ├── toString(float) → Converts `float` to `String`  
+│  
+├── Boolean-Based  
+│   ├── Boolean (boolean)  
+│   │   ├── valueOf(boolean) → Converts `boolean` to `Boolean`  
+│   │   ├── parseBoolean(String) → Converts `String` to `boolean`  
+│   │   ├── toString(boolean) → Converts `boolean` to `String`  
+│   │   ├── compare(boolean, boolean) → Compares two `boolean` values  
+│  
+├── Character-Based  
+│   ├── Character (char)  
+│   │   ├── valueOf(char) → Converts `char` to `Character`  
+│   │   ├── isLetter(char) → Checks if a character is a letter  
+│   │   ├── isDigit(char) → Checks if a character is a digit  
+│   │   ├── toUpperCase(char) → Converts `char` to uppercase  
+│   │   ├── toLowerCase(char) → Converts `char` to lowercase  
+
+
+ Conversion Methods
+
+Conversion methods are used to transform data between different formats, such as converting primitive
+values to wrapper objects, strings to numbers, or numbers to strings. These methods are essential for
+data parsing, user input handling, and working with collections that require object types instead of
+primitives.
+
+2️⃣ Comparison Methods
+
+Comparison methods allow the comparison of numerical and boolean values, returning standardized results
+like -1 (less than), 0 (equal), or 1 (greater than). These methods are crucial for sorting algorithms,
+decision-making, and implementing custom comparison logic in Java collections and data structures.
+
+3️⃣ Bitwise Operations
+
+Bitwise operations manipulate individual bits within integers, enabling efficient mathematical calculations,
+cryptographic algorithms, and low-level data processing. These methods work at the binary level, supporting
+bit shifting, counting, and transformations useful for optimizing performance in system programming.
+
+4️⃣ Character Handling
+
+Character handling methods provide utilities for checking character properties (such as whether a character
+is a letter, digit, or whitespace) and for transforming characters (such as converting lowercase to 
+uppercase). These methods are widely used in text processing, validation, and formatting operations
