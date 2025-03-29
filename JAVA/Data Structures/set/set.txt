@@ -1,0 +1,161 @@
+The major Set implementations in Java are:
+
+1. **HashSet** - Most commonly used implementation with O(1) operations, uses hash table
+2. **LinkedHashSet** - Hash table with linked list, maintains insertion order
+3. **TreeSet** - Sorted implementation using red-black tree, O(log n) operations
+4. **EnumSet** - Specialized for enum types, extremely efficient
+
+Set (Interface)
+│
+├── HashSet
+│
+├── LinkedHashSet (extends HashSet)
+│
+├── SortedSet (Interface, extends Set)
+│   │
+│   └── NavigableSet (Interface, extends SortedSet)
+│       │
+│       └── TreeSet (implements NavigableSet)
+│
+├── EnumSet (abstract class implements Set)
+│   │
+│   ├── RegularEnumSet (internal implementation)
+│   │
+│   └── JumboEnumSet (internal implementation)
+│
+├── CopyOnWriteArraySet
+│
+├── ConcurrentSkipListSet (implements NavigableSet)
+│
+└── Collections utility methods return types
+    │
+    ├── Collections.emptySet()
+    │
+    ├── Collections.singleton()
+    │
+    ├── Collections.unmodifiableSet()
+    │
+    └── Collections.synchronizedSet()
+    
+
+These four cover the vast majority of use cases. The others (CopyOnWriteArraySet, ConcurrentSkipListSet, etc.) 
+are more specialized and used less frequently.
+
+java.util
+│
+├── Set<E>  (Interface)  → No duplicates allowed, unordered by default
+│   │
+│   ├── HashSet<E>  (Implements Set<E>)
+│   │   ├── Uses HashMap internally
+│   │   ├── Unordered, allows null values
+│   │   ├── O(1) average time complexity for add, remove, contains
+│   │
+│   ├── LinkedHashSet<E>  (Extends HashSet<E>)
+│   │   ├── Maintains insertion order
+│   │   ├── Uses LinkedHashMap internally
+│   │   ├── O(1) average time complexity for add, remove, contains
+│   │
+│   ├── SortedSet<E>  (Interface)  → Extends Set<E>, maintains sorted order
+│   │   │
+│   │   ├── TreeSet<E>  (Implements SortedSet<E>)
+│   │       ├── Uses a Red-Black Tree internally
+│   │       ├── Maintains elements in **sorted order**
+│   │       ├── O(log N) time complexity for add, remove, contains
+│   │
+│   ├── NavigableSet<E>  (Interface)  → Extends SortedSet<E>, provides navigation methods
+│       │
+│       ├── TreeSet<E>  (Implements NavigableSet<E>)
+│           ├── Provides methods like `higher()`, `lower()`, `ceiling()`, `floor()`
+│           ├── Good for range queries and sorted data retrieval
+
+
+Set (Interface)  // A collection with no duplicate elements
+│
+├── HashSet  // Unordered implementation using hash table, O(1) operations
+│   ├── add(E e)  // Adds element if not present, returns boolean
+│   ├── remove(E e)  // Removes element if present, returns boolean
+│   ├── contains(E e)  // Checks if element exists, returns boolean
+│   ├── size()  // Returns number of elements
+│   ├── isEmpty()  // Returns true if contains no elements
+│   ├── clear()  // Removes all elements
+│   ├── iterator()  // Returns Iterator over elements in no particular order
+│   └── forEach(Consumer<? super E> action)  // Performs action on each element
+│
+├── LinkedHashSet (Maintains Insertion Order)  // Hash table + linked list implementation
+│   ├── add(E e)  // Same as HashSet, but maintains order
+│   ├── remove(E e)  // Same as HashSet, but maintains order
+│   ├── contains(E e)  // O(1) lookup like HashSet
+│   ├── size()  // Returns number of elements
+│   ├── isEmpty()  // Returns true if contains no elements
+│   ├── clear()  // Removes all elements
+│   ├── iterator()  // Returns Iterator in insertion order
+│   ├── forEach(Consumer<? super E> action)  // Performs action in insertion order
+│   └── maintains insertion order  // Predictable iteration, slightly slower than HashSet
+│
+├── TreeSet (Sorted)  // Red-black tree implementation, O(log n) operations
+│   ├── add(E e)  // Adds element in sorted order
+│   ├── remove(E e)  // Removes element, maintains order
+│   ├── contains(E e)  // O(log n) lookup
+│   ├── size()  // Returns number of elements
+│   ├── isEmpty()  // Returns true if contains no elements
+│   ├── clear()  // Removes all elements
+│   ├── iterator()  // Returns Iterator in ascending order
+│   ├── forEach(Consumer<? super E> action)  // Performs action in sorted order
+│   ├── first()  // Returns lowest element
+│   ├── last()  // Returns highest element
+│   ├── headSet(E toElement)  // Returns elements less than toElement
+│   ├── tailSet(E fromElement)  // Returns elements greater than or equal to fromElement
+│   └── subSet(E fromElement, E toElement)  // Returns elements between fromElement (inclusive) and toElement (exclusive)
+│
+└── NavigableSet (Advanced Navigation - Implemented by TreeSet)  // Extended sorted set with navigation methods
+    ├── add(E e)  // Adds element in sorted order
+    ├── remove(E e)  // Removes element, maintains order
+    ├── contains(E e)  // O(log n) lookup
+    ├── size()  // Returns number of elements
+    ├── isEmpty()  // Returns true if contains no elements
+    ├── clear()  // Removes all elements
+    ├── iterator()  // Returns Iterator in ascending order
+    ├── first()  // Returns lowest element
+    ├── last()  // Returns highest element
+    ├── headSet(E toElement, boolean inclusive)  // Returns elements less than (or equal to, if inclusive) toElement
+    ├── tailSet(E fromElement, boolean inclusive)  // Returns elements greater than (or equal to, if inclusive) fromElement
+    ├── subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive)  // Returns view with range control
+    ├── higher(E e)   // Returns least element strictly greater than e, or null
+    ├── lower(E e)    // Returns greatest element strictly less than e, or null
+    ├── ceiling(E e)  // Returns least element greater than or equal to e, or null
+    ├── floor(E e)    // Returns greatest element less than or equal to e, or null
+    ├── descendingSet() // Returns NavigableSet in reverse order
+    ├── pollFirst()   // Retrieves and removes lowest element, or returns null if empty
+    ├── pollLast()    // Retrieves and removes highest element, or returns null if empty
+    └── descendingIterator()  // Returns Iterator in descending order
+└── EnumSet  // Specialized Set implementation for enum types
+    ├── add(E e)  // Adds enum constant if not present
+    ├── remove(E e)  // Removes enum constant if present
+    ├── contains(E e)  // Very fast constant-time lookup
+    ├── size()  // Returns number of elements
+    ├── isEmpty()  // Returns true if contains no elements
+    ├── clear()  // Removes all elements
+    ├── iterator()  // Returns Iterator over elements
+    ├── allOf(Class<E> elementType)  // Static factory - creates with all enum constants
+    ├── noneOf(Class<E> elementType)  // Static factory - creates empty set
+    ├── of(E first, E... rest)  // Static factory - creates with specified elements
+    ├── range(E from, E to)  // Static factory - creates with range of enum constants
+    └── complementOf(EnumSet<E> s)  // Static factory - creates with all constants not in s
+├── CopyOnWriteArraySet  // Thread-safe set using copy-on-write semantics
+│   ├── add(E e)  // Thread-safe add operation
+│   ├── remove(E e)  // Thread-safe remove operation
+│   ├── contains(E e)  // Thread-safe contains operation
+│   ├── size()  // Returns number of elements
+│   ├── isEmpty()  // Returns true if contains no elements
+│   ├── clear()  // Removes all elements
+│   ├── iterator()  // Returns snapshot iterator (not thread-safe)
+│   └── forEach(Consumer<? super E> action)  // Thread-safe iteration
+│
+├── ConcurrentSkipListSet  // Thread-safe navigable set based on skip list
+│   ├── All NavigableSet operations (thread-safe)
+│   └── Concurrent operations with expected log(n) time cost
+│
+└── Collections.unmodifiableSet()  // Returns unmodifiable view of a set
+    ├── All Set operations that don't modify the set
+    └── Throws UnsupportedOperationException for modification operations
+
