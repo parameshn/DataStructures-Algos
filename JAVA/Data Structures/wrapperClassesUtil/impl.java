@@ -66,6 +66,9 @@ public class impl {
         c = Integer.sum(a, b);
         System.out.println(c);
 
+        c = Integer.parseInt("A", 16);
+        System.out.println("new C ="+c);
+
         // c = Integer.divide(a, b); //doesn't exist 
 
         // c = Integer.remainder(a, b);
