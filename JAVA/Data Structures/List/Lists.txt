@@ -1,0 +1,95 @@
+                            Iterable<E>
+                                │
+                            Collection<E>
+                                │
+      ┌───────────────┬───────────────┬───────────────┐
+      │               │               │
+    List<E>         Set<E>          Queue<E>
+      │               │               │
+      │         ┌─────┴─────┐         │
+      │         │           │         │
+ArrayList,   SortedSet<E>  (Others)   Deque<E>
+LinkedList       │                      │
+...          NavigableSet<E>        (e.g., ArrayDeque,
+                                   LinkedList, PriorityQueue)
+
+             (Map<K, V>)    <-- Not a subtype of Collection!
+                   │
+         ┌─────────┴─────────┐
+         │                   │
+   SortedMap<K,V>     ConcurrentMap<K,V>
+         │                   │
+  NavigableMap<K,V>   (e.g., ConcurrentHashMap,
+                        ConcurrentSkipListMap)
+
+1. Core Hierarchy for Collection Types
+Iterable<E>
+
+The root interface: All collection classes implement this interface so that they can be the target 
+of the enhanced for‑loop (foreach).
+Collection<E> (extends Iterable<E>)
+
+The basic interface for all collections. It defines methods such as add, remove, and iterator.
+
+Subinterfaces of Collection<E>:
+
+List<E>
+
+An ordered sequence (or “list”) that allows duplicate elements.
+Common Implementations:
+ArrayList<E>
+LinkedList<E>
+CopyOnWriteArrayList<E>
+(Also includes legacy classes like Vector and Stack.)
+Set<E>
+
+A collection that cannot contain duplicate elements.
+Subinterfaces:
+SortedSet<E> / NavigableSet<E>
+A set that maintains its elements in a sorted order.
+Common Implementations:
+TreeSet<E>
+EnumSet<E>
+LinkedHashSet<E> (which maintains insertion order, though not sorted by natural order)
+CopyOnWriteArraySet<E>
+Queue<E>
+
+A collection designed for holding elements prior to processing.
+Subinterfaces:
+Deque<E>
+A double-ended queue that supports element insertion and removal at both ends.
+Common Implementations:
+ArrayDeque<E>
+LinkedList<E> (which implements both List and Deque)
+PriorityQueue<E> (a specialized queue that orders its elements according to their natural ordering or a provided comparator)
+2. Map Hierarchy (Separate from Collection)
+Map<K, V>
+An object that maps keys to values. Unlike collections, maps do not extend the Collection interface.
+
+Subinterfaces:
+
+SortedMap<K, V> / NavigableMap<K, V>
+A map that maintains its mappings in a sorted order based on the keys.
+Common Implementations:
+TreeMap<K, V>
+EnumMap<K, V>
+Other Common Implementations:
+
+HashMap<K, V>
+LinkedHashMap<K, V>
+WeakHashMap<K, V>
+IdentityHashMap<K, V>
+In the concurrency domain: ConcurrentHashMap<K, V>, ConcurrentSkipListMap<K, V>
+3. Utility Classes
+Collections
+
+A final class that consists exclusively of static methods that operate on or return collections.
+Examples of Provided Methods:
+Sorting: Collections.sort(List<T>)
+Synchronization: Collections.synchronizedList(List<T>), Collections.synchronizedSet(Set<T>)
+Unmodifiable Wrappers: Collections.unmodifiableList(List<T>), Collections.unmodifiableSet(Set<T>)
+Other Algorithms: Collections.binarySearch(List<? extends Comparable<? super T>>, T key), etc.
+Arrays
+
+Although not part of the Collections Framework per se, the Arrays utility class provides methods to manipulate arrays and includes 
+the asList(T...) method, which returns a fixed-size list backed by the original array.
