@@ -1,0 +1,34 @@
+Java Arithmetic Operations
+├── 1️⃣ Basic Arithmetic Operations (Integer & Long)
+│   ├── sum(a, b) → Adds two numbers
+│   ├── max(a, b) → Returns the larger of two numbers
+│   ├── min(a, b) → Returns the smaller of two numbers
+│   ├── divideUnsigned(a, b) → Performs unsigned integer division
+│   ├── remainderUnsigned(a, b) → Computes unsigned remainder
+│
+├── 2️⃣ Advanced Arithmetic (`Math` Class)
+│   ├── abs(x) → Absolute value
+│   ├── addExact(a, b) → Adds with overflow check
+│   ├── subtractExact(a, b) → Subtracts with overflow check
+│   ├── multiplyExact(a, b) → Multiplies with overflow check
+│   ├── incrementExact(x) → Increments with overflow check
+│   ├── decrementExact(x) → Decrements with overflow check
+│
+├── 3️⃣ Bitwise Arithmetic (`Integer` Class)
+│   ├── bitCount(x) → Counts number of `1`s in binary
+│   ├── highestOneBit(x) → Returns highest power of 2 ≤ x
+│   ├── lowestOneBit(x) → Returns lowest power of 2 in x
+│   ├── reverse(x) → Reverses the bits of x
+│   ├── signum(x) → Returns -1, 0, or 1 based on sign
+│
+├── 4️⃣ Floating-Point Arithmetic (`Double` & `Math` Class)
+│   ├── sum(a, b) → Adds two floating-point numbers
+│   ├── max(a, b) → Returns the larger of two floating-point numbers
+│   ├── min(a, b) → Returns the smaller of two floating-point numbers
+│   ├── sqrt(x) → Computes the square root of x
+│   ├── pow(x, y) → Computes x^y
+│   ├── exp(x) → Computes e^x
+│   ├── log(x) → Computes natural logarithm (ln x)
+│   ├── floor(x) → Rounds down to nearest integer
+│   ├── ceil(x) → Rounds up to nearest integer
+│   ├── round(x) → Rounds to nearest integer
