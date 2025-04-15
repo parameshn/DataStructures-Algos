@@ -1,0 +1,66 @@
+# Reduction in Computational Complexity
+
+Reduction is a fundamental concept in computational complexity theory that allows us to relate the difficulty of one problem to another. 
+It's a powerful technique for classifying problems and understanding their relative complexity.
+
+## Basic Concept of Reduction
+
+A reduction from problem A to problem B shows that problem A is "no harder" than problem B. Formally, we say A reduces to B (written as A ≤ B) 
+if we can transform any instance of problem A into an instance of problem B such that:
+
+1. The transformation can be done efficiently (typically in polynomial time)
+2. The solution to the transformed instance of B can be used to solve the original instance of A
+
+This means if we can solve B efficiently, we can also solve A efficiently by first transforming A to B, then solving B.
+
+## Types of Reductions
+
+### Polynomial-Time Reduction (or Karp Reduction)
+- Most commonly used in complexity theory
+- Transforms an instance of problem A to an instance of problem B in polynomial time
+- Written as A ≤ᵨ B
+- Critical for defining NP-completeness
+
+### Turing Reduction (or Cook Reduction)
+- Problem A is solved using an algorithm that can call a subroutine for problem B
+- Written as A ≤ᵀ B
+- More general than polynomial-time reductions
+
+## Importance in Complexity Classes
+
+### For NP-Complete Problems
+- A problem X is NP-complete if:
+  1. X is in NP
+  2. Every problem in NP can be reduced to X in polynomial time
+
+- When a problem is proven NP-complete, it joins a class of the "hardest" problems in NP
+- If we discover a polynomial-time algorithm for any NP-complete problem, then P = NP
+
+### For EXP-Complete Problems
+- Similar to NP-completeness, but for the EXP complexity class
+- A problem X is EXP-complete if:
+  1. X is in EXP
+  2. Every problem in EXP can be reduced to X in polynomial time
+
+## Example of Reduction
+
+### SAT to 3-SAT Reduction
+- SAT (Boolean Satisfiability Problem): Determine if a Boolean formula can be satisfied
+- 3-SAT: Special case where each clause has exactly 3 literals
+
+The reduction works by transforming any SAT formula into an equivalent 3-SAT formula:
+1. For clauses with more than 3 literals, break them down using new variables
+2. For clauses with fewer than 3 literals, add redundant variables
+
+This transformation preserves satisfiability (the original formula is satisfiable if and only if the transformed formula is
+satisfiable) and can be done in polynomial time.
+
+## Why Reductions Matter
+
+1. **Problem Classification**: Reductions help organize problems into complexity classes
+2. **Algorithm Design**: If problem A reduces to problem B, and you have an efficient algorithm for B, you automatically have an efficient algorithm for A
+3. **Hardness Proofs**: To prove a problem is hard (e.g., NP-complete), you can reduce a known hard problem to it
+4. **Theoretical Understanding**: Reductions reveal deep connections between seemingly unrelated problems
+
+Reductions are one of the most powerful tools in theoretical computer science, allowing us to establish complexity hierarchies and understand the
+fundamental limits of computation.
