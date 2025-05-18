@@ -1,0 +1,486 @@
+Base Cases:
+Conditions that provide an immediate answer (or termination) without further processing.
+
+General Cases:
+The normal, recurring processing steps that solve the problem.
+
+Error Cases:
+Conditions that handle invalid, extreme, or unexpected inputs.
+
+1. Recursive Algorithms (Factorial)
+
+function factorial(n):
+    if n < 0:                           // Error Case: Negative input is invalid.
+        return error
+    if n == 0:                          // Base Case: Terminate recursion.
+        return 1
+    // General Case: Process normally by reducing the problem.
+    return n * factorial(n - 1)
+
+
+2. Divide and Conquer Algorithms (Merge Sort)
+
+function mergeSort(array):
+    if array is null:                   // Error Case: Null input.
+        return error
+    if length(array) <= 1:              // Base Case: Array is trivially sorted.
+        return array
+    // General Case: Divide the array, sort each half, then merge.
+    mid = floor(length(array) / 2)
+    left = mergeSort(array[0:mid])
+    right = mergeSort(array[mid:])
+    return merge(left, right)
+
+
+3. Dynamic Programming (Fibonacci with Memoization)
+
+function fib(n, memo):
+    if n < 0:                           // Error Case: Negative input is invalid.
+        return error
+    if n in memo:                       // General Case: Use memoized result.
+         return memo[n]
+    if n == 0:                          // Base Case.
+         return 0
+    if n == 1:                          // Base Case.
+         return 1
+    // General Case: Compute and store result for reuse.
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)
+    return memo[n]
+
+
+4. Greedy Algorithms (Dijkstra’s Shortest Path)
+
+function dijkstra(graph, source):
+    if source not in graph:             // Error Case: Invalid source node.
+         return error
+    // General Case: Initialize distances.
+    for each vertex in graph:
+         dist[vertex] = infinity
+    dist[source] = 0
+    priorityQueue = createPriorityQueue()
+    priorityQueue.insert(source, 0)
+    
+    while priorityQueue is not empty:   // General Case: Process nodes.
+         u = priorityQueue.extractMin()
+         for each neighbor v of u:
+              if dist[u] + weight(u, v) < dist[v]:
+                    dist[v] = dist[u] + weight(u, v)
+                    priorityQueue.decreaseKey(v, dist[v])
+    return dist                         // Base Case: Termination when queue is empty.
+
+
+5. Backtracking Algorithms (N-Queens)
+
+function solveNQueens(board, row):
+    if row == N:                        // Base Case: All queens are placed.
+        print(board)
+        return
+    for col from 0 to N - 1:             // General Case: Try each column.
+        if isValid(board, row, col):    // General Case: Check if placement is valid.
+            board[row][col] = QUEEN
+            solveNQueens(board, row + 1)
+            board[row][col] = EMPTY     // General Case: Backtracking step to restore state.
+        // (Implicit Error Case: If placement is invalid, simply skip.)
+
+
+6. Brute Force Algorithms (Naïve String Matching)
+
+function naiveStringSearch(text, pattern):
+    if pattern is empty:                // Error Case: Pattern must not be empty.
+         return error
+    for i from 0 to length(text) - length(pattern):
+         match = true
+         for j from 0 to length(pattern) - 1:
+             if text[i + j] != pattern[j]:
+                 match = false
+                 break
+         if match:                      // Base Case: Found a match.
+             return i
+    return -1                           // Error Case: No match found.
+
+
+7. Graph Algorithms (Breadth-First Search - BFS)
+
+function BFS(graph, start):
+    if start not in graph:              // Error Case: Invalid start node.
+         return error
+    create queue Q
+    mark start as visited
+    Q.enqueue(start)
+    while Q is not empty:               // General Case: Process nodes.
+         current = Q.dequeue()
+         process(current)              // (e.g., print or store the node)
+         for each neighbor in graph[current]:
+              if neighbor is not visited:
+                    mark neighbor as visited
+                    Q.enqueue(neighbor)
+    // Base Case: Loop terminates when queue is empty.
+
+
+8. String Algorithms (Knuth-Morris-Pratt - KMP)
+
+function KMP(text, pattern):
+    if pattern is empty:                // Error Case: Pattern cannot be empty.
+         return error
+    lps = computeLPS(pattern)           // General Case: Preprocess pattern.
+    i = 0, j = 0                        // Indices for text and pattern.
+    while i < length(text):             // General Case: Traverse text.
+         if text[i] == pattern[j]:
+              i = i + 1
+              j = j + 1
+         if j == length(pattern):       // Base Case: Pattern found.
+              return i - j
+         else if i < length(text) and text[i] != pattern[j]:
+              if j != 0:
+                   j = lps[j - 1]
+              else:
+                   i = i + 1
+    return -1                           // Error Case: Pattern not found.
+
+9. Randomized Algorithms (Randomized QuickSort)
+
+function randomizedQuickSort(array, low, high):
+    if low >= high:                     // Base Case: Subarray is of length 0 or 1.
+         return
+    // General Case: Partition the array using a random pivot.
+    pivotIndex = randomizedPartition(array, low, high)
+    randomizedQuickSort(array, low, pivotIndex - 1)
+    randomizedQuickSort(array, pivotIndex + 1, high)
+
+function randomizedPartition(array, low, high):
+    pivotIndex = random(low, high)       // General Case: Select random pivot.
+    swap(array[pivotIndex], array[high])
+    pivot = array[high]
+    i = low - 1
+    for j from low to high - 1:
+         if array[j] <= pivot:          // General Case: Partition step.
+             i = i + 1
+             swap(array[i], array[j])
+    swap(array[i + 1], array[high])
+    return i + 1
+
+
+10. Approximation Algorithms (Greedy TSP Heuristic)
+
+function greedyTSP(graph, start):
+    if start not in graph:              // Error Case: Invalid starting node.
+         return error
+    tour = [start]
+    current = start
+    while length(tour) < number of vertices in graph:  // General Case: Build the tour.
+         next = findNearestNeighbor(graph, current, tour)
+         if next is null:             // Error Case: No unvisited neighbor found.
+             break
+         tour.append(next)
+         current = next
+    tour.append(start)                  // General Case: Complete the tour (return to start).
+    return tour                         // Base Case: Tour completed.
+
+
+Below are pseudocode examples for several algorithm types annotated with three categories:
+
+- **Structural Cases:** The inherent design or phases of the algorithm (the “skeleton” of its implementation).  
+- **Edge Cases:** Inputs or conditions at the extreme boundaries that need special handling.  
+- **Performance Cases:** Analysis of how the algorithm performs (best, worst, or average scenarios).
+
+---
+
+### 1. Recursive Algorithms (Factorial)
+
+```plaintext
+function factorial(n):
+    // Edge Case: Check for invalid input.
+    if n < 0:                          // [Edge] Negative numbers are not allowed.
+         return error
+
+    // Structural Base Case: Terminate recursion.
+    if n == 0:                         // [Structural] Base case: smallest unit.
+         return 1
+
+    // Structural Recursive Case: Normal recursive processing.
+    result = n * factorial(n - 1)      // [Structural] General case: reduce problem size.
+    
+    // Performance Consideration: 
+    // Best Case: When n is 0 or near 0 (minimal recursion).
+    // Worst Case: For very large n, deep recursion may slow execution or cause stack overflow.
+    return result
+```
+
+---
+
+### 2. Divide and Conquer Algorithms (Merge Sort)
+
+```plaintext
+function mergeSort(array):
+    // Edge Case: Check for invalid or empty input.
+    if array is null or length(array) == 0:  // [Edge] Handle empty or null array.
+         return error
+
+    // Structural Base Case: Trivial problem.
+    if length(array) <= 1:                   // [Structural] Base case: array is already sorted.
+         return array
+
+    // Structural General Cases: Divide, Conquer, Combine.
+    mid = floor(length(array) / 2)           // [Structural] Divide: split array.
+    left = mergeSort(array[0:mid])             // [Structural] Conquer: sort left half.
+    right = mergeSort(array[mid:])             // [Structural] Conquer: sort right half.
+    sorted = merge(left, right)                // [Structural] Combine: merge sorted halves.
+
+    // Performance Consideration:
+    // Best Case: When divisions are balanced (optimal O(n log n)).
+    // Worst Case: Unbalanced splits might degrade performance.
+    return sorted
+```
+
+---
+
+### 3. Dynamic Programming (Fibonacci with Memoization)
+
+```plaintext
+function fib(n, memo):
+    // Edge Case: Check for invalid input.
+    if n < 0:                              // [Edge] Negative input is invalid.
+         return error
+
+    // Structural Base Cases: Trivial subproblems.
+    if n == 0:                             // [Structural] Base case.
+         return 0
+    if n == 1:                             // [Structural] Base case.
+         return 1
+
+    // Structural General Case: Use memoization.
+    if n in memo:                          // [Structural] General case: reuse computed value.
+         return memo[n]
+
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)  // [Structural] General: solve & store.
+    
+    // Performance Consideration:
+    // Best Case: When many calls hit the memo (fast lookups).
+    // Worst Case: High n still requires building a large memo.
+    return memo[n]
+```
+
+---
+
+### 4. Greedy Algorithms (Dijkstra’s Shortest Path)
+
+```plaintext
+function dijkstra(graph, source):
+    // Edge Case: Check for invalid source.
+    if source not in graph:               // [Edge] Source node must be in the graph.
+         return error
+
+    // Structural General Cases: Initialization.
+    for each vertex in graph:             // [Structural] General: set initial distances.
+         dist[vertex] = infinity
+    dist[source] = 0
+    priorityQueue = createPriorityQueue()
+    priorityQueue.insert(source, 0)
+    
+    // Structural General Cases: Main loop.
+    while priorityQueue is not empty:     // [Structural] General: process nodes.
+         u = priorityQueue.extractMin()
+         for each neighbor v of u:
+              if dist[u] + weight(u, v) < dist[v]:
+                   dist[v] = dist[u] + weight(u, v)
+                   priorityQueue.decreaseKey(v, dist[v])
+                   
+    // Structural Base Case: Loop terminates when no more nodes.
+    // Performance Consideration:
+    // Best Case: When the target is reached quickly.
+    // Worst Case: Dense graphs processed entirely.
+    return dist
+```
+
+---
+
+### 5. Backtracking Algorithms (N-Queens)
+
+```plaintext
+function solveNQueens(board, row):
+    // Structural Base Case: A complete solution is found.
+    if row == N:                        // [Structural] Base case: all queens placed.
+         print(board)
+         return
+
+    // Structural General Cases: Explore each possibility.
+    for col from 0 to N - 1:             // [Structural] General: try each column.
+         if isValid(board, row, col):    // [Structural] General: check validity.
+              board[row][col] = QUEEN   // [Structural] General: make a choice.
+              solveNQueens(board, row + 1)  // [Structural] General: recursive exploration.
+              board[row][col] = EMPTY   // [Structural] General: backtracking step.
+
+    // Edge Case:
+    // If no valid position exists at a given row, recursion unwinds.
+    // Performance Consideration:
+    // Best Case: A valid configuration is found early.
+    // Worst Case: All possibilities are explored (exponential time).
+```
+
+---
+
+### 6. Brute Force Algorithms (Naïve String Matching)
+
+```plaintext
+function naiveStringSearch(text, pattern):
+    // Edge Case: Check for invalid pattern.
+    if pattern is empty:                // [Edge] Pattern cannot be empty.
+         return error
+
+    // Structural General Cases: Exhaustively search.
+    for i from 0 to length(text) - length(pattern):
+         match = true
+         for j from 0 to length(pattern) - 1:
+              if text[i + j] != pattern[j]:
+                   match = false
+                   break
+         // Structural Base Case: A match is found.
+         if match:                     // [Structural] Base: return first match.
+              return i
+
+    // Edge Case: No match found.
+    // Performance Consideration:
+    // Best Case: Match is found early.
+    // Worst Case: Entire text is scanned (O(mn) time).
+    return -1
+```
+
+---
+
+### 7. Graph Algorithms (Breadth-First Search - BFS)
+
+```plaintext
+function BFS(graph, start):
+    // Edge Case: Validate start node.
+    if start not in graph:              // [Edge] Start node must exist.
+         return error
+
+    // Structural General Cases: Initialize traversal.
+    create queue Q
+    mark start as visited
+    Q.enqueue(start)
+
+    // Structural General Cases: Process nodes.
+    while Q is not empty:               // [Structural] General: loop through nodes.
+         current = Q.dequeue()
+         process(current)              // e.g., print or store the node.
+         for each neighbor in graph[current]:
+              if neighbor is not visited:
+                   mark neighbor as visited
+                   Q.enqueue(neighbor)
+                   
+    // Structural Base Case: Termination when the queue is empty.
+    // Performance Consideration:
+    // Best Case: Target found early or graph is sparse.
+    // Worst Case: Entire graph is traversed (O(V+E)).
+```
+
+---
+
+### 8. String Algorithms (Knuth-Morris-Pratt - KMP)
+
+```plaintext
+function KMP(text, pattern):
+    // Edge Case: Validate pattern.
+    if pattern is empty:                // [Edge] Pattern must not be empty.
+         return error
+
+    // Structural General Cases: Preprocess pattern.
+    lps = computeLPS(pattern)           // [Structural] General: build longest prefix table.
+    i = 0, j = 0                        // Indices for text and pattern.
+
+    // Structural General Cases: Traverse text.
+    while i < length(text):
+         if text[i] == pattern[j]:
+              i = i + 1
+              j = j + 1
+         if j == length(pattern):       // [Structural] Base: match found.
+              return i - j
+         else if i < length(text) and text[i] != pattern[j]:
+              if j != 0:
+                   j = lps[j - 1]
+              else:
+                   i = i + 1
+
+    // Edge Case: No match found.
+    // Performance Consideration:
+    // Best Case: Pattern found in first few comparisons.
+    // Worst Case: Full scan of text is needed.
+    return -1
+```
+
+---
+
+### 9. Randomized Algorithms (Randomized QuickSort)
+
+```plaintext
+function randomizedQuickSort(array, low, high):
+    // Structural Base Case: Subarray is small.
+    if low >= high:                     // [Structural] Base case: no need to sort.
+         return
+
+    // Structural General Cases: Partition and sort.
+    pivotIndex = randomizedPartition(array, low, high)   // [Structural] General: partition around random pivot.
+    randomizedQuickSort(array, low, pivotIndex - 1)        // [Structural] General: sort left subarray.
+    randomizedQuickSort(array, pivotIndex + 1, high)         // [Structural] General: sort right subarray.
+
+function randomizedPartition(array, low, high):
+    pivotIndex = random(low, high)       // [Structural] General: select a random pivot.
+    swap(array[pivotIndex], array[high])
+    pivot = array[high]
+    i = low - 1
+    for j from low to high - 1:
+         if array[j] <= pivot:          // [Structural] General: partitioning logic.
+              i = i + 1
+              swap(array[i], array[j])
+    swap(array[i + 1], array[high])
+    return i + 1
+
+// Performance Consideration:
+// Best Case: Random pivot yields balanced partitions (expected O(n log n)).
+// Worst Case: Highly unlucky pivots lead to unbalanced partitions (O(n^2) in worst case).
+```
+
+---
+
+### 10. Approximation Algorithms (Greedy TSP Heuristic)
+
+```plaintext
+function greedyTSP(graph, start):
+    // Edge Case: Validate starting node.
+    if start not in graph:              // [Edge] Invalid starting node.
+         return error
+
+    // Structural General Cases: Build tour iteratively.
+    tour = [start]
+    current = start
+    while length(tour) < number of vertices in graph:  // [Structural] General: extend tour.
+         next = findNearestNeighbor(graph, current, tour)
+         if next is null:             // [Edge] No unvisited neighbor found.
+              break
+         tour.append(next)
+         current = next
+
+    tour.append(start)                  // [Structural] General: complete tour (return to start).
+
+    // Structural Base Case: Tour is complete.
+    // Performance Consideration:
+    // Best Case: Nearest neighbor choices closely approximate the optimal tour.
+    // Worst Case: Poor neighbor choices result in a tour far from optimal.
+    return tour
+```
+
+---
+
+Each pseudocode example is annotated as follows:
+
+- **Structural Cases:**  
+  These comments mark the core design of the algorithm (e.g., base case, recursive/iterative process).
+
+- **Edge Cases:**  
+  These comments indicate handling for boundary conditions or invalid inputs.
+
+- **Performance Cases:**  
+  These comments describe scenarios for optimal or poor performance (best case, worst case), which help analyze how the algorithm behaves under different conditions.
+
+This structured approach provides a comprehensive view of the algorithm’s behavior and aids in clear documentation and analysis.
