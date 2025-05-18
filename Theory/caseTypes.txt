@@ -1,0 +1,244 @@
+Structural Cases:
+
+Base Case: Defines when recursion stops.
+Recursive Case: Describes how the problem is broken into smaller subproblems.
+
+
+Edge Cases:
+
+Edge Case: Tests algorithm correctness with extreme or unusual inputs.
+
+
+Performance Cases:
+
+Best Case: Optimal performance scenario.
+Worst Case: Least efficient performance scenario.
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+1. Recursive Algorithm (Factorial)
+
+
+function factorial(n):
+    if n < 0:                     // Edge Case: Negative input is invalid.
+        return error
+    if n == 0:                    // Base Case: Stops recursion.
+        return 1
+    else:                         // Recursive Case: Calls itself with a smaller problem.
+        return n * factorial(n - 1)
+Summary:
+
+Base Case: n == 0
+
+Recursive Case: return n * factorial(n - 1)
+
+Edge Case: n < 0
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2. Divide and Conquer (Merge Sort)
+
+
+function mergeSort(array):
+    if length(array) <= 1:               // Base Case: Array is trivially sorted (also covers degenerate/empty input).
+        return array
+    mid = length(array) / 2
+    left = mergeSort(array[0:mid])        // Recursive Case: Sort left half.
+    right = mergeSort(array[mid:])        // Recursive Case: Sort right half.
+    return merge(left, right)             // Combine the sorted halves.
+Summary:
+
+Base Case: length(array) <= 1
+
+Recursive Case: The calls to mergeSort on the left and right subarrays.
+
+Edge Case: Empty array or array with one element.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+3. Dynamic Programming (Fibonacci with Memoization)
+
+function fib(n, memo):
+    if n in memo:                       // Optimization: Use stored value.
+        return memo[n]
+    if n < 0:                           // Edge Case: Negative input is invalid.
+        return error
+    if n == 0:                          // Base Case.
+        return 0
+    if n == 1:                          // Base Case.
+        return 1
+    // Recursive Case: Solve smaller subproblems and store the result.
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)
+    return memo[n]
+
+Summary:
+
+Base Cases: n == 0 and n == 1
+
+Recursive Case: memo[n] = fib(n - 1, memo) + fib(n - 2, memo)
+
+Edge Case: n < 0
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+4. Greedy Algorithm (Dijkstra’s Shortest Path)
+(Note: Dijkstra’s algorithm is iterative rather than recursive, but we can still identify key “cases” in its control flow.)
+
+
+function dijkstra(graph, source):
+    for each vertex in graph:
+        dist[vertex] = infinity   // Initialization (Edge Case: Unreachable vertices).
+    dist[source] = 0                // Initialization.
+    priorityQueue.insert(source, 0)
+    
+    while not priorityQueue.isEmpty():  // Loop until all vertices are processed.
+        u = priorityQueue.extractMin()  // Base Case for the loop: When the queue becomes empty.
+        for each neighbor v of u:
+            if dist[u] + weight(u, v) < dist[v]:  // Decision point.
+                dist[v] = dist[u] + weight(u, v)  // Greedy update (Best/Recursive-like step).
+                priorityQueue.decreaseKey(v, dist[v])
+    return dist
+Summary:
+
+Initialization/Edge Case: Setting initial distances and handling vertices that remain unreachable.
+
+Loop Base Case: The priority queue becomes empty (termination of the algorithm).
+
+Greedy Decision Step: Updating distances based on local optimal choices.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+5. Backtracking Algorithm (N-Queens Problem)
+
+function solveNQueens(board, row):
+    if row == N:                         // Base Case: All queens have been successfully placed.
+        print(board)
+        return
+    for col from 0 to N-1:
+        if isValid(board, row, col):     // Edge Check: Validate position for queen.
+            board[row][col] = QUEEN      // Recursive Case: Place queen.
+            solveNQueens(board, row + 1) // Recursive call for next row.
+            board[row][col] = EMPTY      // Backtracking Step (Edge Case Handling): Remove queen if leads to no solution.
+Summary:
+
+Base Case: row == N (a complete solution is found).
+
+Recursive Case: The recursive call solveNQueens(board, row + 1).
+
+Edge Case: When isValid returns false and during backtracking.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+6. Brute Force Algorithm (Permutations)
+
+function permute(list, start, end):
+    if start == end:                // Base Case: A complete permutation is formed.
+        print(list)
+    else:
+        for i from start to end:
+            swap(list[start], list[i])      // Recursive Case: Choose an element to fix at the current position.
+            permute(list, start + 1, end)     // Recursive call for the rest of the list.
+            swap(list[start], list[i])        // Backtracking (Edge Case Handling): Restore original order.
+Summary:
+
+Base Case: start == end
+
+Recursive Case: permute(list, start + 1, end)
+
+Edge Case: Backtracking step (swapping back) to ensure the list remains unchanged for other recursive calls.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+7. Graph Algorithm (Depth-First Search – Recursive DFS)
+
+function DFS(vertex, visited):
+    if vertex in visited:            // Edge Case: Vertex already visited (prevents cycles).
+        return
+    visited.add(vertex)              // Mark current vertex (part of the recursive process).
+    for each neighbor in vertex.neighbors:
+        DFS(neighbor, visited)       // Recursive Case: Explore neighbors.
+Summary:
+
+Base/Edge Case: If vertex is already visited, then stop further recursion.
+
+Recursive Case: The call DFS(neighbor, visited) for each adjacent vertex.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+8. String Algorithm (Naïve Recursive Substring Search)
+
+function substringSearch(text, pattern, index):
+    if index > length(text) - length(pattern):   // Base Case: No room left to find pattern.
+        return -1
+    if text[index: index+length(pattern)] == pattern:  // Found the pattern.
+        return index
+    else:
+        return substringSearch(text, pattern, index + 1)  // Recursive Case: Try next index.
+Summary:
+
+Base Case: When index > length(text) - length(pattern) (search exhausted).
+
+Recursive Case: The call with index + 1.
+
+Edge Case: If either text or pattern is empty (not explicitly handled here, but should be in robust code).
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9. Randomized Algorithm (Randomized QuickSort)
+
+function randomizedQuickSort(array, low, high):
+    if low >= high:                        // Base Case: Subarray has one or no element.
+        return
+    pivotIndex = randomizedPartition(array, low, high)  // Partitioning step (choosing a random pivot).
+    randomizedQuickSort(array, low, pivotIndex - 1)       // Recursive Case: Sort left subarray.
+    randomizedQuickSort(array, pivotIndex + 1, high)        // Recursive Case: Sort right subarray.
+Summary:
+
+Base Case: When low >= high (subarray is trivially sorted).
+
+Recursive Case: The recursive calls on the left and right subarrays.
+
+Edge Case: The case when the array is empty or contains one element is handled by the base case.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+10. Approximation Algorithm (Greedy TSP Heuristic)
+(Note: Though not recursive, we can identify key steps similar to case handling.)
+
+function greedyTSP(graph, start):
+    tour = [start]
+    current = start
+    while length(tour) < number of vertices in graph:
+        next = findNearestNeighbor(graph, current, tour)
+        if next == null:                     // Edge Case: No unvisited neighbor found.
+            break
+        tour.append(next)                    // Iterative Step: Extend the tour (analogous to recursive step).
+        current = next
+    tour.append(start)                       // Completing the tour.
+    return tour
+Summary:
+
+Termination Condition (Base Case equivalent): When length(tour) equals the total number of vertices.
+
+Iterative/Decision Step: Finding and appending the nearest neighbor.
+
+Edge Case: When findNearestNeighbor returns null (no unvisited neighbor available).
+
+https://chatgpt.com/c/67e6938b-c024-800c-9489-8a2e0f07917b
