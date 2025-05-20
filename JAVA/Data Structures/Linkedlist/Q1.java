@@ -13,6 +13,8 @@ public class Q1 {
     public static void main(String[] args) {
 
         duplicate();
+        withoutBuffer();
+        
     }
     
 
@@ -44,7 +46,7 @@ public class Q1 {
         list.add(10);
         list.add(20);
         list.addAll(Arrays.asList(5, 2, 3, 6, 9, 10));
-        
+
         HashSet<Integer> seen = new HashSet<>();
         Iterator<Integer> itr = list.iterator();
 
@@ -59,6 +61,27 @@ public class Q1 {
 
         }
         System.out.println("Final list without duplicates: " + list);
+
+    }
+    
+    public static void withoutBuffer() {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(10);
+        list.add(20);
+        list.addAll(Arrays.asList(5, 2, 3, 6, 9, 10));
+
+        for (int i = 0; i < list.size(); i++) {
+            int value = list.get(i);
+            for (int j = i + 1; j < list.size(); j++) {
+                if (value == list.get(j)) {
+                    System.out.println("Removing dulicate:" + list.get(j));
+                    list.remove(j);
+                    j--;
+                }
+            }
+        }
+        System.out.println("Final list: " + list);
+
 
     }
         
