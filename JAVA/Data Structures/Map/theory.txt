@@ -1,0 +1,57 @@
+
+
+## Map Interface Hierarchy
+
+### Core Interface
+- **Map<K,V>** - The top-level interface in the hierarchy defining the basic mapping operations
+
+### Main Implementation Categories
+
+1. **Regular Maps (Left Side)**
+   - **WeakHashMap<K,V>** - Implementation with weak keys that can be garbage collected
+   - **IdentityHashMap<K,V>** - Uses reference equality (==) instead of object equality (equals())
+   - **EnumMap<K extends Enum<K>, V>** - Specialized for enum keys
+   - **HashMap<K,V>** - Standard hash table implementation
+   - **LinkedHashMap<K,V>** - Hash table with predictable iteration order
+   - **SortedMap<K,V>** - Interface for maps maintaining their keys in sorted order
+   - **NavigableMap<K,V>** - Extension of SortedMap with navigation methods
+   - **TreeMap<K,V>** - Red-black tree implementation of NavigableMap
+
+2. **Concurrent Maps (Right Side in gray box)**
+   - **java.util.concurrent package**
+   - **ConcurrentMap<K,V>** - Interface supporting concurrent access
+   - **ConcurrentHashMap<K,V>** - Thread-safe implementation of ConcurrentMap
+   - **ConcurrentNavigableMap<K,V>** - Thread-safe NavigableMap
+   - **ConcurrentSkipListMap<K,V>** - Concurrent implementation using skip lists
+
+### Key Methods by Interface Type
+
+1. **Map<K,V>**
+   - `put(K, V)`, `get(Object)`, `remove(Object)`
+   - `containsKey(Object)`, `containsValue(Object)`
+   - `keySet()`, `values()`, `entrySet()`
+   - `size()`, `isEmpty()`
+
+2. **SortedMap<K,V>** adds:
+   - `firstKey()`, `lastKey()`
+   - `headMap(K)`, `tailMap(K)`, `subMap(K, K)`
+   - `comparator()`
+
+3. **NavigableMap<K,V>** adds:
+   - `lowerEntry/Key`, `floorEntry/Key`
+   - `ceilingEntry/Key`, `higherEntry/Key`
+   - `pollFirstEntry()`, `pollLastEntry()`
+   - Enhanced sub-map operations
+
+4. **ConcurrentMap<K,V>** adds:
+   - `putIfAbsent(K, V)`
+   - `remove(K, V)` (conditional removal)
+   - `replace()` methods with atomic guarantees
+
+### Performance Characteristics
+
+- **HashMap**: O(1) average time for basic operations
+- **TreeMap**: O(log n) time for most operations
+- **LinkedHashMap**: O(1) with predictable iteration
+- **ConcurrentHashMap**: Thread-safe with high concurrency
+- **ConcurrentSkipListMap**: Thread-safe ordered operations in O(log n)
