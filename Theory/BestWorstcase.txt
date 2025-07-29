@@ -1,0 +1,63 @@
+Recursive Algorithms (e.g., Factorial):
+
+Worst-Case: 
+O(n)
+(For a simple recursion like factorial, even though the best-case is O(1) when the base case 
+is hit immediately, in general the worst-case is linear in the number of recursive calls.)
+
+Divide and Conquer Algorithms:
+
+Best Worst-Case: 
+O(nlogn)
+(Merge sort guarantees O(nlogn) in the worst-case, which is the best you can get among 
+comparison-based sorts. Note that QuickSort can degrade to O(n^2) in the worst-case if unbalanced 
+splits occur.)
+
+Dynamic Programming (DP):
+
+Worst-Case: Typically O(n) or O(n^2) depending on the number of unique subproblems
+(For example, Fibonacci with memoization runs in O(n) worst-case because each subproblem 
+is computed once.)
+
+Greedy Algorithms:
+
+Worst-Case: Often O(nlogn) or O(n)
+(For instance, Dijkstra’s algorithm with a binary heap runs in O((V+E)logV) in the worst-case,
+ which is optimal for many graph problems.)
+
+Backtracking Algorithms:
+
+Worst-Case: Exponential (e.g., O(n!) for problems like N-Queens)
+(Even with pruning, many backtracking approaches have inherently exponential worst-case time 
+due to exploring many configurations.)
+
+Brute Force Algorithms:
+
+Worst-Case: Exponential time, e.g., O(2^n) or O(n!)
+(By definition, exhaustive search methods typically require exponential time in the worst-case.)
+
+Graph Algorithms:
+
+Worst-Case: 
+O(V+E) for traversals like BFS or DFS
+(This is optimal for exploring all vertices and edges in a graph.)
+
+String Algorithms:
+
+Worst-Case: 
+O(n+m) for algorithms like KMP
+(KMP’s worst-case is linear in the length of the text plus the pattern, which is optimal 
+for string matching.)
+
+Randomized Algorithms (e.g., Randomized QuickSort):
+
+Worst-Case: 
+O(n^2) (for Randomized QuickSort, though the expected worst-case is O(nlogn))
+(The best worst-case among sorting algorithms is achieved by methods like merge sort or heap sort,
+ which guarantee O(nlogn).)
+
+Approximation Algorithms:
+
+Worst-Case: Generally polynomial, e.g., O(n^2) or O(n^3)
+(For many NP-hard problems, approximation algorithms run in polynomial time. The exact bound depends
+ on the specific problem and algorithm.)
